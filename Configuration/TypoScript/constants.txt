@@ -1,0 +1,4 @@
+plugin.tx_l10nmgr_grid_pi1 {
+  settings {
+  }
+}

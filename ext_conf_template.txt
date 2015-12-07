@@ -1,0 +1,8 @@
+# cat=basic; type=string; label=Gridelemnts-Include: "," Seperated, Example "Flip", Default: empty
+include =
+# cat=basic; type=string; label=Gridelemnts-Exclude: "," Seperated, Example "Grid", Default: empty
+exclude =
+# cat=FlexForm; type=string; label=Flexform Fields-Include: "," Seperated, Example "Flip:Headline", Default: empty
+flexformInclude =
+# cat=FlexForm; type=string; label=Flexform Fields-Exclude: "," Seperated, Example "Flip:isFlipped", Default: empty
+flexformExclude =
