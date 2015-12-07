@@ -51,5 +51,5 @@ We will be proud if you give us feedback or ideas what we can do better or what 
 
 ### Contact us
 - [Homepage](http://web-kon.de)
-- [Git-Hub](https://bitbucket.org/gutenberghaus/l10nmgr_ext)
+- [GitHub](https://bitbucket.org/gutenberghaus/l10nmgr_ext)
 - [E-Mail](mailto:technik@web-kon.de)
