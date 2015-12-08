@@ -15,7 +15,7 @@ namespace WebKonInternetagentur\L10nmgrGrid\Model\Tools;
  * @package    TYPO3
  * @subpackage tx_l10nmgr_grid
  */
- 
+
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 
@@ -154,8 +154,8 @@ class Tools extends \tx_l10nmgr_tools {
     // Get Plugin Configuration
     $conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['l10nmgr_grid']);
     // Get Element Arrays
-    $exclude = array_map('trim',split(',', $conf['exclude']));
-    $include = array_map('trim',split(',', $conf['include']));
+    $exclude = array_map('trim',explode(',', $conf['exclude']));
+    $include = array_map('trim',explode(',', $conf['include']));
 
     // Element is in Exclude list, also not Import GridFields
     if(in_array($row['tx_gridelements_backend_layout'], $exclude)) return false;
@@ -185,8 +185,8 @@ class Tools extends \tx_l10nmgr_tools {
 
       foreach ($option['lDEF'] as $key => $value) {
         $addField = true;
-        $flexFormInclude = array_map('trim',split(',', $conf['flexformInclude']));
-        $flexFormExclude = array_map('trim',split(',', $conf['flexformExclude']));
+        $flexFormInclude = array_map('trim',explode(',', $conf['flexformInclude']));
+        $flexFormExclude = array_map('trim',explode(',', $conf['flexformExclude']));
         /**
          * Field is in Exclude list, also not Import Field
          */
@@ -238,7 +238,7 @@ class Tools extends \tx_l10nmgr_tools {
   function _checkPatternCondition($conditions, $flexform, $field){
 
     foreach ($conditions as $pattern) {
-      $_pattern = split(':', $pattern);
+      $_pattern = explode(':', $pattern);
 
       // If Flexform Match Condition
       if(in_array( $_pattern[0],array('all' =>'*', 'form' => $flexform) ) ) {
