@@ -1,4 +1,6 @@
 <?php
+namespace WebKonInternetagentur\L10nmgrGrid\Model\Tools;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -13,8 +15,11 @@
  * @package    TYPO3
  * @subpackage tx_l10nmgr_grid
  */
+ 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
-class ux_tx_l10nmgr_tools extends tx_l10nmgr_tools {
+class Tools extends \tx_l10nmgr_tools {
   /**
    * Extend Original Funktion
    */
@@ -65,7 +70,7 @@ class ux_tx_l10nmgr_tools extends tx_l10nmgr_tools {
             if (count($tInfo['translations'])) {
               $this->detailsOutput['log'][] = 'Mode: translate existing record';
               $translationUID = $tInfo['translations'][$sysLang]['uid'];
-              $translationRecord = t3lib_BEfunc::getRecordWSOL($tInfo['translation_table'], $tInfo['translations'][$sysLang]['uid']);
+              $translationRecord = BackendUtility::getRecordWSOL($tInfo['translation_table'], $tInfo['translations'][$sysLang]['uid']);
             } else {
               // Will also suggest to translate a default language record which are in a container block with Inheritance or Separate mode. This might not be something people wish, but there is no way we can prevent it because its a deprecated localization paradigm to use container blocks with localization. The way out might be setting the langauge to "All" for such elements.
               $this->detailsOutput['log'][] = 'Mode: translate to new record';
@@ -84,7 +89,7 @@ class ux_tx_l10nmgr_tools extends tx_l10nmgr_tools {
             foreach ($this->previewLanguages as $prevSysUid) {
               $prevLangInfo = $this->t8Tools->translationInfo($table, $row['uid'], $prevSysUid);
               if ($prevLangInfo['translations'][$prevSysUid]) {
-                $prevLangRec[$prevSysUid] = t3lib_BEfunc::getRecordWSOL($prevLangInfo['translation_table'], $prevLangInfo['translations'][$prevSysUid]['uid']);
+                $prevLangRec[$prevSysUid] = BackendUtility::getRecordWSOL($prevLangInfo['translation_table'], $prevLangInfo['translations'][$prevSysUid]['uid']);
               }
             }
 
@@ -94,16 +99,16 @@ class ux_tx_l10nmgr_tools extends tx_l10nmgr_tools {
                 && $TCA[$tInfo['translation_table']]['ctrl']['transOrigDiffSourceField'] !== $field
               ) {
 
-                $key = $tInfo['translation_table'] . ':' . t3lib_BEfunc::wsMapId($tInfo['translation_table'], $translationUID) . ':' . $field;
+                $key = $tInfo['translation_table'] . ':' . BackendUtility::wsMapId($tInfo['translation_table'], $translationUID) . ':' . $field;
                 if ($cfg['config']['type'] == 'flex') {
                   $dataStructArray = $this->_getFlexFormMetaDataForContentElement($table, $field, $row);
                   if ($dataStructArray['meta']['langDisable'] && $dataStructArray['meta']['langDatabaseOverlay'] == 1) {
                     // Create and call iterator object:
-                    $flexObj = t3lib_div::makeInstance('t3lib_flexformtools');
+                    $flexObj = GeneralUtility::makeInstance('TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools');
                     $this->_callBackParams_keyForTranslationDetails = $key;
-                    $this->_callBackParams_translationXMLArray = t3lib_div::xml2array($translationRecord[$field]);
+                    $this->_callBackParams_translationXMLArray = GeneralUtility::xml2array($translationRecord[$field]);
                     foreach ($this->previewLanguages as $prevSysUid) {
-                      $this->_callBackParams_previewLanguageXMLArrays[$prevSysUid] = t3lib_div::xml2array($prevLangRec[$prevSysUid][$field]);
+                      $this->_callBackParams_previewLanguageXMLArrays[$prevSysUid] = GeneralUtility::xml2array($prevLangRec[$prevSysUid][$field]);
                     }
                     $this->_callBackParams_currentRow = $row;
                     $flexObj->traverseFlexFormXMLData($table, $field, $row, $this, 'translationDetails_flexFormCallBackForOverlay');
@@ -160,7 +165,7 @@ class ux_tx_l10nmgr_tools extends tx_l10nmgr_tools {
     /**
      * Match Flexform XML
      */
-    $flexform = TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($row['pi_flexform']);
+    $flexform = GeneralUtility::xml2array($row['pi_flexform']);
     // Übersetzung Holen:
     $translationValue = false;
     if(count($tInfo['translations'])) {
@@ -169,11 +174,11 @@ class ux_tx_l10nmgr_tools extends tx_l10nmgr_tools {
          */
         $this->detailsOutput['log'][] = 'Mode: translate existing record';
         $translationUID = $tInfo['translations'][$sysLang]['uid'];
-        $translationRecord = t3lib_BEfunc::getRecordWSOL($tInfo['translation_table'], $tInfo['translations'][$sysLang]['uid']);
+        $translationRecord = BackendUtility::getRecordWSOL($tInfo['translation_table'], $tInfo['translations'][$sysLang]['uid']);
         /**
          * Match Flexform XML for Translation
          */
-        $translationValue = TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($translationRecord['pi_flexform']);
+        $translationValue = GeneralUtility::xml2array($translationRecord['pi_flexform']);
 
     }
     foreach ($flexform['data'] as $_key => $option) {

@@ -1,4 +1,6 @@
 <?php
+namespace WebKonInternetagentur\L10nmgrGrid\Model;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -15,8 +17,10 @@
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 
-class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
+class L10nBaseService extends \tx_l10nmgr_l10nBaseService {
 	/**
    * Copy of Original Funktion
    * Modifyed in line: 118-121
@@ -24,9 +28,9 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
 	function _submitContentAsTranslatedLanguageAndGetFlexFormDiff($accum, $inputArray) {
 		if (is_array($inputArray)) {
 			// Initialize:
-			/** @var $flexToolObj t3lib_flexformtools */
-			$flexToolObj = t3lib_div::makeInstance('t3lib_flexformtools');
-			$gridElementsInstalled = t3lib_extMgm::isLoaded('gridelements');
+			/** @var $flexToolObj TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools */
+			$flexToolObj = GeneralUtility::makeInstance('TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools');
+			$gridElementsInstalled = ExtensionManagementUtility::isLoaded('gridelements');
 			$TCEmain_data = array();
 			$TCEmain_cmd = array();
 
@@ -52,7 +56,7 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
 
 									// If new element is required, we prepare for localization
 									if($table === 'tt_content' && $gridElementsInstalled === TRUE) {
-										$element = t3lib_BEfunc::getRecordRaw($table, $where = 'uid = ' . $elementUid . ' AND colPos > -1');
+										$element = BackendUtility::getRecordRaw($table, $where = 'uid = ' . $elementUid . ' AND colPos > -1');
 									}
 									if ($Tuid === 'NEW' && $element !== FALSE) {
 										//print "\nNEW\n";
@@ -90,8 +94,8 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
 			self::$targetLanguageID = $Tlang;
 
 			// Execute CMD array: Localizing records:
-			/** @var $tce t3lib_TCEmain */
-			$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+			/** @var $tce TYPO3\CMS\Core\DataHandling\DataHandler */
+			$tce = GeneralUtility::makeInstance('TYPO3\CMS\Core\DataHandling\DataHandler');
 			if ($this->extensionConfiguration['enable_neverHideAtCopy'] == 1) {
 				$tce->neverHideAtCopy = TRUE;
 			}
@@ -107,7 +111,7 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
 
 			// Before remapping
 			if (TYPO3_DLOG) {
-				t3lib_div::sysLog(__FILE__ . ': ' . __LINE__ . ': TCEmain_data before remapping: ' . t3lib_div::arrayToLogString($TCEmain_data), 'l10nmgr');
+				GeneralUtility::sysLog(__FILE__ . ': ' . __LINE__ . ': TCEmain_data before remapping: ' . GeneralUtility::arrayToLogString($TCEmain_data), 'l10nmgr');
 			}
 			// Remapping those elements which are new:
 			$this->lastTCEMAINCommandsCount = 0;
@@ -117,9 +121,9 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
 					$this->lastTCEMAINCommandsCount++;
 					if ($Tuid === 'NEW') {
 						if ($tce->copyMappingArray_merged[$table][$TdefRecord]) {
-							$TCEmain_data[$table][t3lib_BEfunc::wsMapId($table, $tce->copyMappingArray_merged[$table][$TdefRecord])] = $fields;
+							$TCEmain_data[$table][BackendUtility::wsMapId($table, $tce->copyMappingArray_merged[$table][$TdefRecord])] = $fields;
 						} else {
-							t3lib_div::sysLog(__FILE__ . ': ' . __LINE__ . ': Record "' . $table . ':' . $TdefRecord . '" was NOT localized as it should have been!', 'l10nmgr');
+							GeneralUtility::sysLog(__FILE__ . ': ' . __LINE__ . ': Record "' . $table . ':' . $TdefRecord . '" was NOT localized as it should have been!', 'l10nmgr');
 						}
 						unset($TCEmain_data[$table][$TuidString]);
 					}
@@ -127,7 +131,7 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
 			}
 			// After remapping
 			if (TYPO3_DLOG) {
-				t3lib_div::sysLog(__FILE__ . ': ' . __LINE__ . ': TCEmain_data after remapping: ' . t3lib_div::arrayToLogString($TCEmain_data), 'l10nmgr');
+				GeneralUtility::sysLog(__FILE__ . ': ' . __LINE__ . ': TCEmain_data after remapping: ' . GeneralUtility::arrayToLogString($TCEmain_data), 'l10nmgr');
 			}
 
       /**
@@ -136,8 +140,8 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
       $this->_formatForGridelementsFlexForm($TCEmain_data);
 
 			// Now, submitting translation data:
-			/** @var $tce t3lib_TCEmain */
-			$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+			/** @var $tce TYPO3\CMS\Core\DataHandling\DataHandler */
+			$tce = GeneralUtility::makeInstance('TYPO3\CMS\Core\DataHandling\DataHandler');
 			if ($this->extensionConfiguration['enable_neverHideAtCopy'] == 1) {
 				$tce->neverHideAtCopy = TRUE;
 			}
@@ -151,12 +155,12 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
 			self::$targetLanguageID = NULL;
 
 			if (count($tce->errorLog)) {
-				t3lib_div::sysLog(__FILE__ . ': ' . __LINE__ . ': TCEmain update errors: ' . t3lib_div::arrayToLogString($tce->errorLog), 'l10nmgr');
+				GeneralUtility::sysLog(__FILE__ . ': ' . __LINE__ . ': TCEmain update errors: ' . GeneralUtility::arrayToLogString($tce->errorLog), 'l10nmgr');
 			}
 
 			if (count($tce->autoVersionIdMap) && count($_flexFormDiffArray)) {
 				if (TYPO3_DLOG) {
-					t3lib_div::sysLog(__FILE__ . ': ' . __LINE__ . ': flexFormDiffArry: ' . t3lib_div::arrayToLogString($this->flexFormDiffArray), 'l10nmgr');
+					GeneralUtility::sysLog(__FILE__ . ': ' . __LINE__ . ': flexFormDiffArry: ' . GeneralUtility::arrayToLogString($this->flexFormDiffArray), 'l10nmgr');
 				}
 				foreach ($_flexFormDiffArray as $key => $value) {
 					list($Ttable, $Tuid, $Trest) = explode(':', $key, 3);
@@ -166,8 +170,8 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
 					}
 				}
 				if (TYPO3_DLOG) {
-					t3lib_div::sysLog(__FILE__ . ': ' . __LINE__ . ': autoVersionIdMap: ' . $tce->autoVersionIdMap, 'l10nmgr');
-					t3lib_div::sysLog(__FILE__ . ': ' . __LINE__ . ': _flexFormDiffArray: ' . t3lib_div::arrayToLogString($_flexFormDiffArray), 'l10nmgr');
+					GeneralUtility::sysLog(__FILE__ . ': ' . __LINE__ . ': autoVersionIdMap: ' . $tce->autoVersionIdMap, 'l10nmgr');
+					GeneralUtility::sysLog(__FILE__ . ': ' . __LINE__ . ': _flexFormDiffArray: ' . GeneralUtility::arrayToLogString($_flexFormDiffArray), 'l10nmgr');
 				}
 			}
 
@@ -206,11 +210,11 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
         /**
          * Get Reccord for FlexForm merge
          */
-        $translationRecord = t3lib_BEfunc::getRecordWSOL('tt_content', $uid);
+        $translationRecord = BackendUtility::getRecordWSOL('tt_content', $uid);
         /**
          * Match Flexform XML for Translation
          */
-        $flexform = TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($translationRecord['pi_flexform']);
+        $flexform = GeneralUtility::xml2array($translationRecord['pi_flexform']);
         /**
          * Merge Values to XML Strukture
          */
@@ -244,7 +248,7 @@ class ux_tx_l10nmgr_l10nBaseService extends tx_l10nmgr_l10nBaseService {
       }
     }
     // Pack FlexForm to XML
-    $flexformTools = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\FlexForm\\FlexFormTools');
+    $flexformTools = GeneralUtility::makeInstance('TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools');
 		$returnXML = $flexformTools->flexArray2Xml($flexform, TRUE);
     // Set new Array to Updater
     $field['pi_flexform'] = $flexformTools->flexArray2Xml($flexform, TRUE);
