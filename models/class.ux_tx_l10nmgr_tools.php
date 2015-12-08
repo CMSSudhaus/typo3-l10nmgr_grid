@@ -149,8 +149,9 @@ class ux_tx_l10nmgr_tools extends tx_l10nmgr_tools {
     // Get Plugin Configuration
     $conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['l10nmgr_grid']);
     // Get Element Arrays
-    $exclude = split(',', $conf['exclude']);
-    $include = split(',', $conf['include']);
+    $exclude = array_map('trim',split(',', $conf['exclude']));
+    $include = array_map('trim',split(',', $conf['include']));
+
     // Element is in Exclude list, also not Import GridFields
     if(in_array($row['tx_gridelements_backend_layout'], $exclude)) return false;
     // Element is not in Include list, also not Import GridFields
@@ -179,8 +180,8 @@ class ux_tx_l10nmgr_tools extends tx_l10nmgr_tools {
 
       foreach ($option['lDEF'] as $key => $value) {
         $addField = true;
-        $flexFormInclude = split(',', $conf['flexformInclude']);
-        $flexFormExclude = split(',', $conf['flexformExclude']);
+        $flexFormInclude = array_map('trim',split(',', $conf['flexformInclude']));
+        $flexFormExclude = array_map('trim',split(',', $conf['flexformExclude']));
         /**
          * Field is in Exclude list, also not Import Field
          */
