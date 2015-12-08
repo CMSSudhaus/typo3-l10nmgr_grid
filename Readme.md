@@ -1,27 +1,27 @@
 # l10nmgr_grid
-The Extension expands the Basic [l10nmgr Plugin](http://typo3.org/extensions/repository/view/l10nmgr). Now you can define as many Gridelement's individual FlexForms as you need and Translate all without Problems.
+The extension expands the Basic [l10nmgr Plugin](http://typo3.org/extensions/repository/view/l10nmgr). Now you can define as many gridelements separated FlexForms as you need and translate them all without any problems.
 
 ## Why we expand
-Each Grid-System was no Problem because the Default Plugin only Exports the normal **tt_content** Fields from an Element.
-But we defined for our Customers Individual FlexForms, for Slider, Flip Objects, Modals and many more.
-Also there was missing something and we need to do this Extension.
+Each Grid-System was not a Problem because the default plugin only exports the regular **tt_content** fields from an element.
+But we have defined for our customers individual FlexForms, for example for Slider, flipping objects, modals and many more, which were not translated.
+Also parts were missing, so we decided to expand the extension.
 
 ## Introduction
-You can Export all Fields from your Gridelements and import them as an **Translation**. You Can't import the translation as the Default Language, we haven't do that yet. If you need that Feature please give us Feedback.
+You can export all fields from your gridelements and import them as an **Translation**. You can't import the translation as the default language, we haven't don that yet. But if you need that feature simply give us feedback and we will implement it soon.
 
 ### Configuration
-If you have Installed the Plugin you, can set some config's in the Extension Manager. The Default Values are **empty**.
-In the Configuration the **Exclude** is always leading
+If you have installed the plugin you, can set some config's in the extension manager. The dfault values are **empty**.
+In the configuration the **Exclude** is always leading.
 
 #### Include
-In this Field you can that an Limited Export of Gridelements. For Example if you have 5 Gridelements and only 1 of them has FlexForm fields to Translate. Add the Name of that FlexForm and only this one will be added to the Export.
+In this field you can do an limited export of gridelements. For example if you have 5 gridelements and only one of them has FlexForm fields to translate. Add the name of that FlexForm and only this one will be added to the export.
 
 #### Exclude
-The fields exlude defined FlexForm's from the export.
-For Example if you have 5 Gridelements and only 1 of them has **no** FlexForm fields to Translate. Add the Name of that FlexForm and only this one will no be in to the Export.
+The fields which are defined as exkluded will not be considered in the FlexForms for the export.
+For example if you have five gridelements and only one of them has **no** FlexForm fields to translate. Add the name of that FlexForm field and only this one will no be considered for the Export.
 
 #### FlexForm-Field Include
-This field can define which field of the FlexForm ist added to the Export. So you can decide which field need to be Translated.
+This field can define which field of the FlexForm ist added to the export. So you can decide which field needs to be translated.
 
 For Example:<br/>
 ``Flip:Headline``<br/>
@@ -29,10 +29,10 @@ this means that only the **Headline**-Field of the **Flip**-FlexForm will be exp
 
 You also can place an ``*`` as a wildcard to the config:<br/>
 `*:Headline`<br/>
-Now will be all **Headlines** from **all** FlexForms exported.
+Now there will be all **Headlines** from **all** FlexForms exported.
 
 #### FlexForm-Field Exclude
-This field can be used to exclude Specific FlexForm-Fields from the Export.
+This field can be used to exclude specific FlexForm-Fields from the export.
 
 For Example:<br/>
 ``Flip:direction``<br/>
@@ -40,16 +40,16 @@ Now the **Direction** field of the **Flip**-FlexForm will not be exported.
 
 You also can place an ``*`` as a wildcard to the config:<br/>
 `*:css`<br/>
-Now will be all **css**-Fields not be exported.
+Now will be all **css**-fields not be exported.
 
 #### Wildcard Pattern
-You can't use an ``*`` as Placeholder, it is only defined as Wildcard Syntax.
+You can't use an ``*`` as placeholder, it is only defined as Wildcard syntax.
 
 ## Please give us feedback
 Now we want to share our work with you.
-We will be proud if you give us feedback or ideas what we can do better or what is missing.
+We would appreciate any kind of feedback or ideas for further developments to keep improving the extension for your needs.
 
 ### Contact us
 - [Homepage](http://web-kon.de)
-- [GitHub](https://bitbucket.org/gutenberghaus/l10nmgr_ext)
+- [GitHub](https://github.com/DirkPersky/l10nmgr_grid)
 - [E-Mail](mailto:technik@web-kon.de)

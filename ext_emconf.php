@@ -25,8 +25,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'constraints' => array(
 		'depends' => array(
 			'typo3' => '6.2.0-6.2.99',
-			'l10nmgr' => '3.6.4',
-			'gridelements' => '3.2.0'
+			'l10nmgr' => '3.6.3-3.9.99',
+			'gridelements' => '3.2.0-3.3.9'
 		),
 		'conflicts' => array(
 		),
