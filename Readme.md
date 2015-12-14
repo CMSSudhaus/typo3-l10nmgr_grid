@@ -50,6 +50,7 @@ Now we want to share our work with you.
 We would appreciate any kind of feedback or ideas for further developments to keep improving the extension for your needs.
 
 ### Contact us
-- [Homepage](http://web-kon.de)
-- [GitHub](https://github.com/DirkPersky/l10nmgr_grid)
 - [E-Mail](mailto:technik@web-kon.de)
+- [GitHub](https://github.com/CMSSudhaus/l10nmgr_grid)
+- [Homepage](web-kon.de/leistungen/typo3-extension-l10nmgr-grid/)
+- [TYPO3.org](http://typo3.org/extensions/repository/view/l10nmgr_grid)
