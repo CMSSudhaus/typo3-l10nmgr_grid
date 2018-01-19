@@ -7,15 +7,15 @@ if (!defined ('TYPO3_MODE')) {
  * Export Override
  */
 // Set New Class to Autoload
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['tx_l10nmgr_tools'] = array(
- 'className' => 'WebKonInternetagentur\L10nmgrGrid\Model\Tools\Tools'
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['Localizationteam\\L10nmgr\\Model\\Tools\\Tools'] = array(
+ 'className' => 'WebKonInternetagentur\\L10nmgrGrid\\Model\\Tools\\Tools'
 );
 
 /**
  * Import Override
  */
 // Set New Class to Autoload
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['tx_l10nmgr_l10nBaseService'] = array(
- 'className' => 'WebKonInternetagentur\L10nmgrGrid\Model\L10nBaseService'
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['Localizationteam\\L10nmgr\\Model\\L10nBaseService'] = array(
+ 'className' => 'WebKonInternetagentur\\L10nmgrGrid\\Model\\L10nBaseService'
 );
 ?>
