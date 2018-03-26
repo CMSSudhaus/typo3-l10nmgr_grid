@@ -198,11 +198,11 @@ class Tools extends OriginalTools {
         /**
          * Field is in Exclude list, also not Import Field
          */
-        if( $this->_checkPatternCondition($flexFormExclude, $_key, $key) ) $addField = false;
+        if( $this->_checkPatternCondition($flexFormExclude, $row['tx_gridelements_backend_layout'], $key) ) $addField = false;
         /**
          * Field is not in Include list, also not Import Field
          */
-        if( !empty($conf['flexformInclude']) && !$this->_checkPatternCondition($flexFormInclude, $_key, $key) ) $addField = false;
+        if( !empty($conf['flexformInclude']) && !$this->_checkPatternCondition($flexFormInclude, $row['tx_gridelements_backend_layout'], $key) ) $addField = false;
 
         if($addField === true){
           /**
